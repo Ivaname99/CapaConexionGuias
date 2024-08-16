@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CapaConexion.Modelos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -44,9 +45,22 @@ namespace CapaConexion
             SqlCommand comando = new SqlCommand(selectFrom, conexion);
             SqlDataReader reader = comando.ExecuteReader();
 
+            List<customers> Customers = new List<customers>();
+
             while (reader.Read())
             {
-                var customerId = reader["CompanyName"];
+                customers customers = new customers();
+                customers.CompanyName = ((reader["CompanyName"] == DBNull.Value) ? "" : ((string)reader["CompanyName"]));
+                customers.ContactName = ((reader["ContactName"] == DBNull.Value) ? "" : ((string)reader["ContactName"]));
+                customers.ContactTitle = ((reader["ContactTitle"] == DBNull.Value) ? "" : ((string)reader["ContactTitle"]));
+                customers.Address = ((reader["Address"] == DBNull.Value) ? "" : ((string)reader["Address"]));
+                customers.City = ((reader["City"] == DBNull.Value) ? "" : ((string)reader["City"]));
+                customers.Region = ((reader["Region"] == DBNull.Value) ? "" : ((string)reader["Region"]));
+                customers.PostalCode = ((reader["PostalCode"] == DBNull.Value) ? "" : ((string)reader["PostalCode"]));
+                customers.Country = ((reader["Country"] == DBNull.Value) ? "" : ((string)reader["Country"]));
+                customers.Phone = ((reader["Phone"] == DBNull.Value) ? "" : ((string)reader["Phone"]));
+                customers.Fax = ((reader["Fax"] == DBNull.Value) ? "" : ((string)reader["Fax"]));
+                Customers.Add(customers);
             }
 
             MessageBox.Show("Conexión cerrada");
