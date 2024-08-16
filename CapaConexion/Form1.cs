@@ -25,14 +25,28 @@ namespace CapaConexion
                 ("Data Source=DESKTOP-SIMON\\SQLEXPRESS;Initial Catalog=Northwind;Integrated Security=True;");
             MessageBox.Show("Conexión creada");
             conexion.Open();
-            string selectFrom = "SELECT * FROM [dbo].[Customers]";
+
+            //-----------------------
+            string selectFrom = "";
+            selectFrom += "SELECT [CompanyName] \n";
+            selectFrom += "      ,[ContactName] \n";
+            selectFrom += "      ,[ContactTitle] \n";
+            selectFrom += "      ,[Address] \n";
+            selectFrom += "      ,[City] \n";
+            selectFrom += "      ,[Region] \n";
+            selectFrom += "      ,[PostalCode] \n";
+            selectFrom += "      ,[Country] \n";
+            selectFrom += "      ,[Phone] \n";
+            selectFrom += "      ,[Fax] \n";
+            selectFrom += "  FROM [dbo].[Customers]";
+            //-----------------------
 
             SqlCommand comando = new SqlCommand(selectFrom, conexion);
             SqlDataReader reader = comando.ExecuteReader();
 
             while (reader.Read())
             {
-                var customerId = reader[0];
+                var customerId = reader["CompanyName"];
             }
 
             MessageBox.Show("Conexión cerrada");
