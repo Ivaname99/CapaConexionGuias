@@ -14,6 +14,7 @@ namespace CapaConexion
 {
     public partial class Form1 : Form
     {
+        List<customers> Customers = new List<customers>();
         public Form1()
         {
             InitializeComponent();
@@ -62,10 +63,17 @@ namespace CapaConexion
                 customers.Fax = ((reader["Fax"] == DBNull.Value) ? "" : ((string)reader["Fax"]));
                 Customers.Add(customers);
             }
+            dataGrid.DataSource = Customers;
 
             MessageBox.Show("Conexión cerrada");
             conexion.Close();
 
+        }
+
+        private void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            var filtro = Customers.FindAll(X => X.CompanyName.StartsWith(txtFiltro.Text));
+            dataGrid.DataSource = filtro;
         }
     }
 }
