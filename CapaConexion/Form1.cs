@@ -30,7 +30,6 @@ namespace CapaConexion
             SqlCommand comando = new SqlCommand(selectFrom, conexion);
             SqlDataReader reader = comando.ExecuteReader();
 
-
             while (reader.Read())
             {
                 var customerId = reader[0];
