@@ -46,8 +46,6 @@ namespace CapaConexion
             SqlCommand comando = new SqlCommand(selectFrom, conexion);
             SqlDataReader reader = comando.ExecuteReader();
 
-            List<customers> Customers = new List<customers>();
-
             while (reader.Read())
             {
                 customers customers = new customers();
@@ -74,6 +72,12 @@ namespace CapaConexion
         {
             var filtro = Customers.FindAll(X => X.CompanyName.StartsWith(txtFiltro.Text));
             dataGrid.DataSource = filtro;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            string cadenaConexion = DatosLayer.DataBase.ConnectionString;
+            //MessageBox.Show(cadenaConexion);
         }
     }
 }
