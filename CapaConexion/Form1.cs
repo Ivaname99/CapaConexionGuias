@@ -1,4 +1,4 @@
-﻿using CapaConexion.Modelos;
+﻿using DatosLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +14,7 @@ namespace CapaConexion
 {
     public partial class Form1 : Form
     {
-        List<customers> Customers = new List<customers>();
+        CustomerRepository customerRepository = new CustomerRepository();
         public Form1()
         {
             InitializeComponent();
@@ -22,66 +22,25 @@ namespace CapaConexion
 
         private void btnCargar_Click(object sender, EventArgs e)
         {
-            SqlConnection conexion = 
-                new SqlConnection
-                ("Data Source=DESKTOP-SIMON\\SQLEXPRESS;Initial Catalog=Northwind;Integrated Security=True;");
-            MessageBox.Show("Conexión creada");
-            conexion.Open();
-
-            //-----------------------
-            string selectFrom = "";
-            selectFrom += "SELECT [CompanyName] \n";
-            selectFrom += "      ,[ContactName] \n";
-            selectFrom += "      ,[ContactTitle] \n";
-            selectFrom += "      ,[Address] \n";
-            selectFrom += "      ,[City] \n";
-            selectFrom += "      ,[Region] \n";
-            selectFrom += "      ,[PostalCode] \n";
-            selectFrom += "      ,[Country] \n";
-            selectFrom += "      ,[Phone] \n";
-            selectFrom += "      ,[Fax] \n";
-            selectFrom += "  FROM [dbo].[Customers]";
-            //-----------------------
-
-            SqlCommand comando = new SqlCommand(selectFrom, conexion);
-            SqlDataReader reader = comando.ExecuteReader();
-
-            while (reader.Read())
-            {
-                customers customers = new customers();
-                customers.CompanyName = ((reader["CompanyName"] == DBNull.Value) ? "" : ((string)reader["CompanyName"]));
-                customers.ContactName = ((reader["ContactName"] == DBNull.Value) ? "" : ((string)reader["ContactName"]));
-                customers.ContactTitle = ((reader["ContactTitle"] == DBNull.Value) ? "" : ((string)reader["ContactTitle"]));
-                customers.Address = ((reader["Address"] == DBNull.Value) ? "" : ((string)reader["Address"]));
-                customers.City = ((reader["City"] == DBNull.Value) ? "" : ((string)reader["City"]));
-                customers.Region = ((reader["Region"] == DBNull.Value) ? "" : ((string)reader["Region"]));
-                customers.PostalCode = ((reader["PostalCode"] == DBNull.Value) ? "" : ((string)reader["PostalCode"]));
-                customers.Country = ((reader["Country"] == DBNull.Value) ? "" : ((string)reader["Country"]));
-                customers.Phone = ((reader["Phone"] == DBNull.Value) ? "" : ((string)reader["Phone"]));
-                customers.Fax = ((reader["Fax"] == DBNull.Value) ? "" : ((string)reader["Fax"]));
-                Customers.Add(customers);
-            }
+            //dataGrid.DataSource = Customers;
+            var Customers = customerRepository.ObtenerTodos();
             dataGrid.DataSource = Customers;
-
-            MessageBox.Show("Conexión cerrada");
-            conexion.Close();
-
         }
 
         private void txtFiltro_TextChanged(object sender, EventArgs e)
         {
-            var filtro = Customers.FindAll(X => X.CompanyName.StartsWith(txtFiltro.Text));
-            dataGrid.DataSource = filtro;
+            //var filtro = Customers.FindAll(X => X.CompanyName.StartsWith(txtFiltro.Text));
+            //dataGrid.DataSource = filtro;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            DatosLayer.DataBase.ApplicationName = "Programacion 2 ejemplo";
-            DatosLayer.DataBase.ConnetionTimeout = 30;
-            string cadenaConexion = DatosLayer.DataBase.ConnectionString;
-            //MessageBox.Show(cadenaConexion);
+            //DatosLayer.DataBase.ApplicationName = "Programacion 2 ejemplo";
+            //DatosLayer.DataBase.ConnetionTimeout = 30;
+            //string cadenaConexion = DatosLayer.DataBase.ConnectionString;
+            ////MessageBox.Show(cadenaConexion);
 
-            var conectarDB = DatosLayer.DataBase.GetSqlConnection();
+            //var conectarDB = DatosLayer.DataBase.GetSqlConnection();
         }
     }
 }
