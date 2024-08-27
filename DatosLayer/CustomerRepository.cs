@@ -1,8 +1,10 @@
-﻿using System;
+﻿//Codigo Actual de la clase CustomerRepository
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,15 +41,15 @@ namespace DatosLayer
                         Customers.Add(customers);
                     }
                     return Customers;
-                };
+                }
             }
         }
-
         public Customers ObtenerPorID(string id)
         {
 
             using (var conexion = DataBase.GetSqlConnection())
             {
+
                 String selectForID = "";
                 selectForID = selectForID + "SELECT [CustomerID] " + "\n";
                 selectForID = selectForID + "      ,[CompanyName] " + "\n";
@@ -61,10 +63,11 @@ namespace DatosLayer
                 selectForID = selectForID + "      ,[Phone] " + "\n";
                 selectForID = selectForID + "      ,[Fax] " + "\n";
                 selectForID = selectForID + "  FROM [dbo].[Customers] " + "\n";
-                selectForID = selectForID + $"  Where CustomerID = '{id}'";
+                selectForID = selectForID + $"  Where CustomerID = @customerId";
 
                 using (SqlCommand comando = new SqlCommand(selectForID, conexion))
                 {
+                    comando.Parameters.AddWithValue("customerId", id);
                     var reader = comando.ExecuteReader();
                     Customers customers = null;
                     if (reader.Read())
