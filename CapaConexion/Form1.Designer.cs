@@ -48,6 +48,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.tboxContactName = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.btnModificar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -180,7 +181,7 @@
             // 
             this.btnInsertar.Location = new System.Drawing.Point(554, 333);
             this.btnInsertar.Name = "btnInsertar";
-            this.btnInsertar.Size = new System.Drawing.Size(167, 35);
+            this.btnInsertar.Size = new System.Drawing.Size(87, 35);
             this.btnInsertar.TabIndex = 17;
             this.btnInsertar.Text = "Ingresar";
             this.btnInsertar.UseVisualStyleBackColor = true;
@@ -218,11 +219,22 @@
             this.label8.TabIndex = 20;
             this.label8.Text = "Contact Name";
             // 
+            // btnModificar
+            // 
+            this.btnModificar.Location = new System.Drawing.Point(647, 333);
+            this.btnModificar.Name = "btnModificar";
+            this.btnModificar.Size = new System.Drawing.Size(87, 35);
+            this.btnModificar.TabIndex = 22;
+            this.btnModificar.Text = "Modificar";
+            this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(758, 450);
+            this.Controls.Add(this.btnModificar);
             this.Controls.Add(this.tboxContactName);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.tboxFiltro);
@@ -274,6 +286,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tboxContactName;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btnModificar;
     }
 }
 
