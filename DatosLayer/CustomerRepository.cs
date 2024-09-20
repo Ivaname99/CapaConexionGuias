@@ -17,8 +17,8 @@ namespace DatosLayer
             using (var conexion = DataBase.GetSqlConnection())
             {
                 String selectFrom = "";
-                selectFrom = selectFrom + "SELECT " + "\n";
-                selectFrom = selectFrom + "      [CompanyName] " + "\n";
+                selectFrom = selectFrom + "SELECT [CustomerID] " + "\n";
+                selectFrom = selectFrom + "      ,[CompanyName] " + "\n";
                 selectFrom = selectFrom + "      ,[ContactName] " + "\n";
                 selectFrom = selectFrom + "      ,[ContactTitle] " + "\n";
                 selectFrom = selectFrom + "      ,[Address] " + "\n";
@@ -78,7 +78,6 @@ namespace DatosLayer
                 }
             }
         }
-
         public Customers LeerDelDataReader(SqlDataReader reader)
         {
 
@@ -94,6 +93,40 @@ namespace DatosLayer
             customers.Phone = reader["Phone"] == DBNull.Value ? "" : (String)reader["Phone"];
             customers.Fax = reader["Fax"] == DBNull.Value ? "" : (String)reader["Fax"];
             return customers;
+        }
+
+        public int InsertarCliente(Customers customer)
+        {
+            using (var conexion = DataBase.GetSqlConnection())
+            {
+                String InsertInto = "";
+                InsertInto = InsertInto + "INSERT INTO [dbo].[Customers] " + "\n";
+                InsertInto = InsertInto + "           ([CustomerID] " + "\n";
+                InsertInto = InsertInto + "           ,[CompanyName] " + "\n";
+                InsertInto = InsertInto + "           ,[ContactName] " + "\n";
+                InsertInto = InsertInto + "           ,[ContactTitle] " + "\n";
+                InsertInto = InsertInto + "           ,[Address] " + "\n";
+                InsertInto = InsertInto + "           ,[City]) " + "\n";
+                InsertInto = InsertInto + "     VALUES " + "\n";
+                InsertInto = InsertInto + "           (@CustomerID " + "\n";
+                InsertInto = InsertInto + "           ,@CompanyName " + "\n";
+                InsertInto = InsertInto + "           ,@ContactName " + "\n";
+                InsertInto = InsertInto + "           ,@ContactTitle " + "\n";
+                InsertInto = InsertInto + "           ,@Address " + "\n";
+                InsertInto = InsertInto + "           ,@City)";
+
+                using (var comando = new SqlCommand(InsertInto, conexion))
+                {
+                    comando.Parameters.AddWithValue("CustomerID", customer.CustomerID);
+                    comando.Parameters.AddWithValue("CompanyName", customer.CompanyName);
+                    comando.Parameters.AddWithValue("ContactName", customer.ContactName);
+                    comando.Parameters.AddWithValue("ContactTitle", customer.ContactName);
+                    comando.Parameters.AddWithValue("Address", customer.Address);
+                    comando.Parameters.AddWithValue("City", customer.City);
+                    var insertados = comando.ExecuteNonQuery();
+                    return insertados;
+                }
+            }
         }
     }
 }
